@@ -1,7 +1,17 @@
+import java.io.IOException;
 import java.util.*;
 import Creatures.*;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
-public class Battle extends Characters{
+public class Battle extends Characters {
 
     public Player[] Player1 = new Player[2];
     public Monster[] monster = new Monster[8];
@@ -191,4 +201,5 @@ public class Battle extends Characters{
         monster[flood] = monster[index].Flood(monster[index], monster[flood]);
 
         }
+
     }
