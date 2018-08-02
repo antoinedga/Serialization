@@ -1,16 +1,17 @@
 import Creatures.*;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.application.Application.*;
 
 import java.io.*;
 import java.util.*;
@@ -18,7 +19,11 @@ import java.util.*;
 
 
 
-public class Main extends Application{
+public class Main extends Application implements EventHandler<ActionEvent>{
+    Battle battle = new Battle();
+    Button loadChar;
+    Button newChar;
+
     public static void main(String[] args) throws IOException {
         Random rand = new Random();
         Scanner scan = new Scanner(System.in);
@@ -251,14 +256,14 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception{
 
         Stage primWindow = primaryStage;
-        Stage secWindow = new Stage();
+
 
 
         // Scene for openning Scene
         BorderPane border = new BorderPane();
         HBox buttonBox = new HBox();
-        Button loadChar = new Button("Load Character");
-        Button newChar = new Button("Create new Character");
+        loadChar = new Button("Load Character");
+        newChar = new Button("Create new Character");
         buttonBox.setPadding(new Insets(10,10,10,10));
         buttonBox.setSpacing(15);
 
@@ -269,21 +274,81 @@ public class Main extends Application{
         HBox.setHgrow(loadChar, Priority.ALWAYS);
         HBox.setHgrow(newChar, Priority.ALWAYS);
 
-        buttonBox.setAlignment(Pos.CENTER);
+        loadChar.setOnAction(this);// load button
+        newChar.setOnAction(this); // create new button
 
+        buttonBox.setAlignment(Pos.CENTER);
 
         buttonBox.getChildren().addAll(newChar, loadChar);
 
-        Image imageHalo = new Image("file:halo-5-image1.jpg");
-        ImageView openIMG = new ImageView(imageHalo);
-        openIMG.fitWidthProperty().bind(primWindow.widthProperty());
+        // image for home screen
+        Image imageHalo = new Image("halo-5-image1.jpg");
+        BackgroundImage openIMG = new BackgroundImage(imageHalo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,  new BackgroundSize(900, 500, false, false , true , true));
 
-        border.setCenter(openIMG);
-
+        border.setBackground(new Background(openIMG));
 
         border.setBottom(buttonBox);
-        Scene Opening = new Scene(border, 500 , 500);// opennig screen of program to create or load old charater
+        border.bottomProperty();
+        Scene Opening = new Scene(border, 900 , 500);// opening screen of program to create or load old charater
         primWindow.setScene(Opening);
         primWindow.show();
     }
+
+    @Override
+    public void handle(ActionEvent event) {
+
+        //TO load the Character
+        if(event.getSource() == loadChar){
+            Stage secWindow = new Stage();
+
+            GridPane load = new GridPane();
+
+            //text field to enter character's name
+            TextField charName = new TextField();
+            charName.setPromptText("USERNAME");
+            charName.setMaxSize(350,250);
+            GridPane.setConstraints(charName, 0, 0);
+
+            //button to load character
+            Button okay = new Button("Load Character");
+            GridPane.setConstraints(okay, 0,1);
+
+            //Background Image
+            Image openingIMG = new Image("loadChar_PIC.jpg");
+            BackgroundImage image = new BackgroundImage(openingIMG,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT, new BackgroundSize(500, 500, false, false , true, true));
+            load.setBackground(new Background(image));
+
+            load.getChildren().addAll(okay,charName);
+
+            Scene opening = new Scene(load, 500, 500);
+
+            secWindow.setScene(opening);
+            secWindow.showAndWait();
+
+            // load character by calling loading method
+            okay.setOnAction(e -> {
+                String name = charName.getText();
+                name = name.concat(".ser");
+                while(true){
+                    if(battle.testLoad(name)){
+                        battle.loadGame(name);
+                        secWindow.close();
+                    break;
+                    }
+                }
+
+                //put scene for selecting who to battle/ status of character
+
+            });
+
+            if(event.getSource() == newChar){
+
+            }
+
+
+
+
+        }
+    }
+
 }

@@ -3,9 +3,11 @@ import java.util.*;
 import Creatures.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -13,7 +15,7 @@ import javafx.stage.Window;
 
 public class Battle extends Characters {
 
-    public Player[] Player1 = new Player[2];
+    public Player[] Player1 = new Player[4];
     public Monster[] monster = new Monster[8];
 
 
@@ -185,6 +187,30 @@ public class Battle extends Characters {
 
         System.out.println("Character: " + Player1[1].getSpecies() +"\nLevel: " + Player1[1].getLevel() +"\nHealth: " + Player1[1].getHealth() + "\n Attack: " + Player1[1].getAttack() + "\nDefense: " + Player1[1].getDefense() +
         "\nSpeed: " + Player1[1].getSpeed() + "\nHealthPack: " + Player1[1].getHealthPack() + "\nGrenades: " + Player1[1].getGrenade() + "\nEXP: " + Player1[1].getExp());
+    }
+
+    // to test to input and catch error
+    public boolean testLoad(String file){
+        boolean status;
+
+        Player1[3] = new Player();
+        Player1[3] = Player1[3].load(file);
+        if(Player1[3].getSpecies() == null){
+            Stage error = new Stage();
+            Label warning = new Label("INVALID USER NAME! TRY AGAIN");
+            Group layout = new Group();
+            layout.getChildren().add(warning);
+
+            Scene errorScene = new Scene(layout, 500, 500);
+            error.setScene(errorScene);
+            error.show();
+
+            status = false;
+        }
+        else{
+            status = true;
+        }
+        return status;
     }
 
     public void print_status(int index){
