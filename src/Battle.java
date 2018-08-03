@@ -3,14 +3,18 @@ import java.util.*;
 import Creatures.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 public class Battle extends Characters {
@@ -53,6 +57,9 @@ public class Battle extends Characters {
         return false;
     }
 
+    public int getLevel(){
+        return Player1[1].getLevel();
+    }
     public int exp(int mon) {
         gained = monster[mon].getExp();
         Player1[1].setExp( Player1[1].getExp() + monster[mon].getExp());
@@ -195,15 +202,28 @@ public class Battle extends Characters {
 
         Player1[3] = new Player();
         Player1[3] = Player1[3].load(file);
-        if(Player1[3].getSpecies() == null){
+        if(Player1[3] == null){
             Stage error = new Stage();
-            Label warning = new Label("INVALID USER NAME! TRY AGAIN");
-            Group layout = new Group();
-            layout.getChildren().add(warning);
+            error.initModality(Modality.APPLICATION_MODAL);
+            error.initStyle(StageStyle.UNDECORATED);
+            error.setTitle("Invalid USER");
 
-            Scene errorScene = new Scene(layout, 500, 500);
+
+            Label warning = new Label("  INVALID USER NAME!\n\tTRY AGAIN");
+            warning.setPrefSize(550,350);
+            warning.setFont(new Font("Ariel", 28));
+
+
+            VBox layout = new VBox();
+            Button close = new Button("TRY AGAIN");
+            layout.setAlignment(Pos.CENTER);// center button and label
+            close.setOnAction(e -> error.close());
+
+            layout.getChildren().addAll(warning,close);
+
+            Scene errorScene = new Scene(layout, 300, 300);
             error.setScene(errorScene);
-            error.show();
+            error.showAndWait();
 
             status = false;
         }

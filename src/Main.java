@@ -4,13 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -18,11 +21,11 @@ import java.util.*;
 
 
 
-
 public class Main extends Application implements EventHandler<ActionEvent>{
     Battle battle = new Battle();
     Button loadChar;
     Button newChar;
+    Stage primWindow;
 
     public static void main(String[] args) throws IOException {
         Random rand = new Random();
@@ -63,6 +66,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
                         scan.nextLine();
                     }
                 }
+
             catch(Exception e){
                     System.out.println("Invalid Entry!");
                     scan.nextLine();
@@ -255,7 +259,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
     public void start(Stage primaryStage) throws Exception{
 
-        Stage primWindow = primaryStage;
+        primWindow = primaryStage;
 
 
 
@@ -301,7 +305,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         if(event.getSource() == loadChar){
             Stage secWindow = new Stage();
 
-            GridPane load = new GridPane();
+            GridPane loadPane = new GridPane();
 
             //text field to enter character's name
             TextField charName = new TextField();
@@ -315,27 +319,34 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
             //Background Image
             Image openingIMG = new Image("loadChar_PIC.jpg");
-            BackgroundImage image = new BackgroundImage(openingIMG,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT, new BackgroundSize(500, 500, false, false , true, true));
-            load.setBackground(new Background(image));
+            BackgroundImage image = new BackgroundImage(openingIMG,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER, new BackgroundSize(300, 300, true, true , true, true));
+            loadPane.setBackground(new Background(image));
 
-            load.getChildren().addAll(okay,charName);
 
-            Scene opening = new Scene(load, 500, 500);
+            loadPane.setPadding(new Insets(0,0,0,10));
+            loadPane.getChildren().addAll(okay,charName); // add nodes to gridpane
 
+            Scene opening = new Scene(loadPane, 550, 300);
+            secWindow.setResizable(false);
             secWindow.setScene(opening);
-            secWindow.showAndWait();
+
+            secWindow.show();
 
             // load character by calling loading method
             okay.setOnAction(e -> {
                 String name = charName.getText();
                 name = name.concat(".ser");
-                while(true){
+
+
                     if(battle.testLoad(name)){
                         battle.loadGame(name);
                         secWindow.close();
-                    break;
+                        selectionScene();
                     }
-                }
+                    else{
+                        charName.clear();
+                    }
+
 
                 //put scene for selecting who to battle/ status of character
 
@@ -351,4 +362,34 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         }
     }
 
+    public void selectionScene(){
+        BorderPane border = new BorderPane();
+        //Players Status on left side of border Pane
+        VBox playerInfo = new VBox();
+        playerInfo.setPadding(new Insets(10,10,10,10));
+        Label level = new Label("Level: " + battle.getLevel());
+        Label health = new Label("Health: " + battle.currentHealth(1) + "/" + battle.getMaxHealth());
+        Label grendaes = new Label("Grenades: " + battle.getGrenades());
+        Label healthPack = new Label("Health Pack: " + battle.getPack());
+
+        //set text to white
+        level.setTextFill(Color.WHITE);
+        health.setTextFill(Color.WHITE);
+        grendaes.setTextFill(Color.WHITE);
+        healthPack.setTextFill(Color.WHITE);
+
+        playerInfo.getChildren().addAll(level, health, grendaes, healthPack);
+        Image PlayerStat = new Image("status.jpg");
+        BackgroundImage image = new BackgroundImage(PlayerStat,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT, new BackgroundSize(20, 300, true, true , true, true));
+        playerInfo.setBackground(new Background(image));
+
+        border.setLeft(playerInfo);
+
+        //List of Monster to Fight
+        VBox monsterInfo = new VBox();
+
+        Scene SelectionScene = new Scene(border, 500, 500);
+        primWindow.setScene(SelectionScene);
+    }
 }
+
