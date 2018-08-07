@@ -20,7 +20,7 @@ import javafx.stage.Window;
 public class Battle extends Characters {
 
     public Player[] Player1 = new Player[4];
-    public Monster[] monster = new Monster[8];
+    public Monster[] monster = new Monster[7];
 
 
     private int damage;
@@ -125,6 +125,10 @@ public class Battle extends Characters {
         System.out.println("8. Save game");
     }
 
+    public Monster[] getMonsterList() {
+        return monster;
+    }
+
     public void createMon() {
         monster[0] = new Monster("Grunt", 4, 4, 4, 75, 35);
         monster[1] = new Monster("Jackel", 13, 10, 11, 135, 45);
@@ -133,7 +137,6 @@ public class Battle extends Characters {
         monster[4] = new Monster("Brute", 25, 30, 10, 400, 90);
         monster[5] = new Monster("Elite Sentinal", 37, 25, 20, 375, 105);
         monster[6] = new Monster("Arbitor", 67 , 47, 39, 600, 185);
-        monster[7] = new Monster();
     }
     public void Stronger(boolean levelStatus){
         if(Player1[1].getLevel() == 12 && !levelStatus && !stronger ) {

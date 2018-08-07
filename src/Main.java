@@ -1,17 +1,17 @@
 import Creatures.*;
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -26,6 +26,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
     Button loadChar;
     Button newChar;
     Stage primWindow;
+
+    ListView<String> listNames;
 
     public static void main(String[] args) throws IOException {
         Random rand = new Random();
@@ -378,15 +380,26 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         grendaes.setTextFill(Color.WHITE);
         healthPack.setTextFill(Color.WHITE);
 
-        playerInfo.getChildren().addAll(level, health, grendaes, healthPack);
+        // adding all nodes to players corner status
+        playerInfo.getChildren().addAll(level, health, grendaes, healthPack);// add nodes to Vbox
         Image PlayerStat = new Image("status.jpg");
         BackgroundImage image = new BackgroundImage(PlayerStat,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT, new BackgroundSize(20, 300, true, true , true, true));
         playerInfo.setBackground(new Background(image));
-
         border.setLeft(playerInfo);
 
         //List of Monster to Fight
-        VBox monsterInfo = new VBox();
+        battle.createMon();//creates monster list
+        listNames = new ListView<>();//listview,
+
+        String copyNames; // local variable to add names to listView
+        for(int i = 0; i < battle.monster.length; i++){
+            copyNames = battle.monster[i].getSpecies();
+            listNames.getItems().add(copyNames);
+        }
+
+        //selection mode for list view, one to fight one monster
+        listNames.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        border.setCenter(listNames);
 
         Scene SelectionScene = new Scene(border, 500, 500);
         primWindow.setScene(SelectionScene);
