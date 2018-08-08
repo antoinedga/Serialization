@@ -1,4 +1,8 @@
+import Creatures.*;
+
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.*;
 import Creatures.*;
 import javafx.event.ActionEvent;
@@ -125,9 +129,6 @@ public class Battle extends Characters {
         System.out.println("8. Save game");
     }
 
-    public Monster[] getMonsterList() {
-        return monster;
-    }
 
     public void createMon() {
         monster[0] = new Monster("Grunt", 4, 4, 4, 75, 35);
@@ -138,6 +139,20 @@ public class Battle extends Characters {
         monster[5] = new Monster("Elite Sentinal", 37, 25, 20, 375, 105);
         monster[6] = new Monster("Arbitor", 67 , 47, 39, 600, 185);
     }
+
+    public Monster findMonster(String name) {
+        Monster temp = new Monster();
+        for(int i = 0; i < monster.length; i++){
+            if(name == monster[i].getSpecies()){
+                System.arraycopy(monster,1,temp,0,1);
+                break;
+            }
+            else{}
+        }
+        return temp;
+    }
+
+
     public void Stronger(boolean levelStatus){
         if(Player1[1].getLevel() == 12 && !levelStatus && !stronger ) {
 

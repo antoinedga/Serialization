@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -366,6 +367,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
     public void selectionScene(){
         BorderPane border = new BorderPane();
+
         //Players Status on left side of border Pane
         VBox playerInfo = new VBox();
         playerInfo.setPadding(new Insets(10,10,10,10));
@@ -400,6 +402,37 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         //selection mode for list view, one to fight one monster
         listNames.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         border.setCenter(listNames);
+
+        //Status of Monster
+        VBox monStat = new VBox();
+
+        Label monName = new Label("");
+        Label monHealth = new Label("");
+        Label monATK = new Label("");
+        Label monDEF = new Label("");
+
+        monStat.getChildren().addAll(monName, monHealth, monATK, monDEF);
+        border.setRight(monStat);
+
+
+
+        listNames.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event) {
+
+                Monster selectedMon = new Monster();
+
+                ObservableList<String> name = listNames.getSelectionModel().getSelectedItems();
+
+
+                    String stringName = name.toString();
+                    selectedMon = battle.findMonster(stringName);
+                    monName.setText(selectedMon.getSpecies());
+                    System.out.print(selectedMon.getSpecies());
+            }
+        });
+
+
 
         Scene SelectionScene = new Scene(border, 500, 500);
         primWindow.setScene(SelectionScene);
