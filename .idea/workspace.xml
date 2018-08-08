@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="644fcd00-472a-43d5-8ba3-0ca2605a8ab8" name="Default" comment="First commit for Halo Pokemon">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Basic Game/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Basic Game/Main.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,10 +16,12 @@
     <session id="-658063613">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.38" value="1" />
           <entry key="project.open.time.43" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -47,10 +50,9 @@
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="508">
-              <caret line="402" lean-forward="true" selection-start-line="402" selection-end-line="402" />
+              <caret line="402" selection-start-line="402" selection-end-line="402" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#main#0;class#Main#0" />
               </folding>
             </state>
           </provider>
@@ -59,11 +61,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Battle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-138">
+            <state relative-caret-position="85">
               <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#playerAttack#0;class#Battle#0" />
                 <element signature="method#MonAttack#0;class#Battle#0" />
                 <element signature="method#setPlayerAttack#0;class#Battle#0" />
                 <element signature="method#PlayersHP#0;class#Battle#0" />
@@ -73,22 +74,6 @@
                 <element signature="method#monsterList#0;class#Battle#0" />
                 <element signature="method#Stronger#0;class#Battle#0" />
                 <element signature="method#list#0;class#Battle#0" />
-                <element signature="e#5258#5259#0" expanded="true" />
-                <element signature="e#5303#5304#0" expanded="true" />
-                <element signature="e#5336#5337#0" expanded="true" />
-                <element signature="e#5381#5382#0" expanded="true" />
-                <element signature="e#5409#5410#0" expanded="true" />
-                <element signature="e#5458#5459#0" expanded="true" />
-                <element signature="e#5502#5503#0" expanded="true" />
-                <element signature="e#5552#5553#0" expanded="true" />
-                <element signature="e#5584#5585#0" expanded="true" />
-                <element signature="e#5630#5631#0" expanded="true" />
-                <element signature="e#5668#5669#0" expanded="true" />
-                <element signature="e#5722#5723#0" expanded="true" />
-                <element signature="e#5765#5766#0" expanded="true" />
-                <element signature="e#5839#5840#0" expanded="true" />
-                <element signature="e#7852#7853#0" expanded="true" />
-                <element signature="e#7923#7924#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -97,7 +82,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Creatures/Characters.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-487">
+            <state relative-caret-position="578">
               <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
               <folding>
                 <element signature="e#1173#1174#0" expanded="true" />
@@ -118,7 +103,18 @@
                 <element signature="e#1629#1630#0" expanded="true" />
                 <element signature="e#1674#1675#0" expanded="true" />
                 <element signature="e#1711#1712#0" expanded="true" />
-                <element signature="method#reset_Health#0;class#Characters#0" />
+                <element signature="e#1752#1753#0" expanded="true" />
+                <element signature="e#1784#1785#0" expanded="true" />
+                <element signature="e#1825#1826#0" expanded="true" />
+                <element signature="e#1855#1856#0" expanded="true" />
+                <element signature="e#1897#1898#0" expanded="true" />
+                <element signature="e#1927#1928#0" expanded="true" />
+                <element signature="e#2052#2053#0" expanded="true" />
+                <element signature="e#2102#2103#0" expanded="true" />
+                <element signature="e#2145#2146#0" expanded="true" />
+                <element signature="e#2184#2185#0" expanded="true" />
+                <element signature="e#2222#2223#0" expanded="true" />
+                <element signature="e#2251#2252#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,14 +123,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Creatures/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
+            <state relative-caret-position="646">
               <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#298#299#0" expanded="true" />
                 <element signature="e#321#322#0" expanded="true" />
                 <element signature="method#Player#1;class#Player#0" />
-                <element signature="method#level_up#0;class#Player#0" />
+                <element signature="e#715#716#0" expanded="true" />
+                <element signature="e#748#749#0" expanded="true" />
                 <element signature="method#grenadesDamage#0;class#Player#0" />
                 <element signature="method#save#0;class#Player#0" />
               </folding>
@@ -194,10 +191,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="977" />
-    <option name="height" value="1042" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="979" />
+    <option name="height" value="1044" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -221,6 +218,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -238,8 +237,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -332,6 +329,8 @@
       <updated>1510780179640</updated>
       <workItem from="1533271233075" duration="902000" />
       <workItem from="1533328001133" duration="5331000" />
+      <workItem from="1533689870842" duration="243000" />
+      <workItem from="1533698349276" duration="21000" />
     </task>
     <task id="LOCAL-00001" summary="First commit for Halo Pokemon">
       <created>1511151232108</created>
@@ -344,12 +343,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6233000" />
+    <option name="totallyTimeSpent" value="6497000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1691" height="917" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49541286" visible="true" weight="0.18600368" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49541286" visible="true" weight="0.19091468" />
       <window_info id="Structure" order="1" weight="0.24973147" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -358,7 +357,7 @@
       <window_info id="Favorites" order="6" sideWeight="0.5045872" side_tool="true" weight="0.21805556" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295583" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48101267" weight="0.26992288" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48101267" weight="0.8817481" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49444443" weight="0.655527" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -447,9 +446,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="508">
+          <caret line="402" selection-start-line="402" selection-end-line="402" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Battle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#MonAttack#0;class#Battle#0" />
+            <element signature="method#setPlayerAttack#0;class#Battle#0" />
+            <element signature="method#PlayersHP#0;class#Battle#0" />
+            <element signature="method#exp#0;class#Battle#0" />
+            <element signature="method#PlayerHeal#0;class#Battle#0" />
+            <element signature="method#enemyHP#0;class#Battle#0" />
+            <element signature="method#monsterList#0;class#Battle#0" />
+            <element signature="method#Stronger#0;class#Battle#0" />
+            <element signature="method#list#0;class#Battle#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Creatures/Characters.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-487">
+        <state relative-caret-position="578">
           <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
           <folding>
             <element signature="e#1173#1174#0" expanded="true" />
@@ -470,21 +498,33 @@
             <element signature="e#1629#1630#0" expanded="true" />
             <element signature="e#1674#1675#0" expanded="true" />
             <element signature="e#1711#1712#0" expanded="true" />
-            <element signature="method#reset_Health#0;class#Characters#0" />
+            <element signature="e#1752#1753#0" expanded="true" />
+            <element signature="e#1784#1785#0" expanded="true" />
+            <element signature="e#1825#1826#0" expanded="true" />
+            <element signature="e#1855#1856#0" expanded="true" />
+            <element signature="e#1897#1898#0" expanded="true" />
+            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#2052#2053#0" expanded="true" />
+            <element signature="e#2102#2103#0" expanded="true" />
+            <element signature="e#2145#2146#0" expanded="true" />
+            <element signature="e#2184#2185#0" expanded="true" />
+            <element signature="e#2222#2223#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Creatures/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
+        <state relative-caret-position="646">
           <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#298#299#0" expanded="true" />
             <element signature="e#321#322#0" expanded="true" />
             <element signature="method#Player#1;class#Player#0" />
-            <element signature="method#level_up#0;class#Player#0" />
+            <element signature="e#715#716#0" expanded="true" />
+            <element signature="e#748#749#0" expanded="true" />
             <element signature="method#grenadesDamage#0;class#Player#0" />
             <element signature="method#save#0;class#Player#0" />
           </folding>
@@ -495,53 +535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Battle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#playerAttack#0;class#Battle#0" />
-            <element signature="method#MonAttack#0;class#Battle#0" />
-            <element signature="method#setPlayerAttack#0;class#Battle#0" />
-            <element signature="method#PlayersHP#0;class#Battle#0" />
-            <element signature="method#exp#0;class#Battle#0" />
-            <element signature="method#PlayerHeal#0;class#Battle#0" />
-            <element signature="method#enemyHP#0;class#Battle#0" />
-            <element signature="method#monsterList#0;class#Battle#0" />
-            <element signature="method#Stronger#0;class#Battle#0" />
-            <element signature="method#list#0;class#Battle#0" />
-            <element signature="e#5258#5259#0" expanded="true" />
-            <element signature="e#5303#5304#0" expanded="true" />
-            <element signature="e#5336#5337#0" expanded="true" />
-            <element signature="e#5381#5382#0" expanded="true" />
-            <element signature="e#5409#5410#0" expanded="true" />
-            <element signature="e#5458#5459#0" expanded="true" />
-            <element signature="e#5502#5503#0" expanded="true" />
-            <element signature="e#5552#5553#0" expanded="true" />
-            <element signature="e#5584#5585#0" expanded="true" />
-            <element signature="e#5630#5631#0" expanded="true" />
-            <element signature="e#5668#5669#0" expanded="true" />
-            <element signature="e#5722#5723#0" expanded="true" />
-            <element signature="e#5765#5766#0" expanded="true" />
-            <element signature="e#5839#5840#0" expanded="true" />
-            <element signature="e#7852#7853#0" expanded="true" />
-            <element signature="e#7923#7924#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="402" lean-forward="true" selection-start-line="402" selection-end-line="402" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#main#0;class#Main#0" />
-          </folding>
         </state>
       </provider>
     </entry>
