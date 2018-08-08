@@ -1,4 +1,7 @@
 package  Creatures;
+import java.lang.Cloneable;
+
+
 public class Monster extends Characters {
 
     public Monster(){}
@@ -21,6 +24,10 @@ public class Monster extends Characters {
         flood.setDefense(mon.getDefense());
         flood.setAttack((int)(mon.getAttack() * 1.25));
         return flood;
+    }
+
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }
