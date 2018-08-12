@@ -140,16 +140,19 @@ public class Battle extends Characters {
         monster[6] = new Monster("Arbitor", 67 , 47, 39, 600, 185);
     }
 
-    public Monster findMonster(String name) {
-        Monster temp = new Monster();
-        for(int i = 0; i < monster.length; i++){
+    public String[] getMonInfo(String name, String[] labels) {
+
+        for (int i = 0; i < monster.length; i++) {
             if(name == monster[i].getSpecies()){
-                System.arraycopy(monster,1,temp,0,1);
-                break;
+                labels[0] = monster[i].getSpecies();
+                labels[1] = Integer.toString(monster[i].getMaxHealth());
+                labels[2] = Integer.toString(monster[i].getAttack());
+                labels[3] = Integer.toString(monster[i].getDefense());
+                labels[4] = Integer.toString(monster[i].getSpeed());
+                return labels;
             }
-            else{}
         }
-        return temp;
+        return labels;
     }
 
 

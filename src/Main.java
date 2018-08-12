@@ -1,6 +1,11 @@
 import Creatures.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -22,13 +27,15 @@ import java.util.*;
 
 
 
-public class Main extends Application implements EventHandler<ActionEvent>{
+public class Main extends Application implements EventHandler<ActionEvent> {
     Battle battle = new Battle();
     Button loadChar;
     Button newChar;
     Stage primWindow;
 
     ListView<String> listNames;
+    String monLabel[] = new String[5];/* reference to getting value of monster to print on labels
+    each index representing a data of the monster selected, 0 = name, 1 = health, 2 = attack, 3 = defense, 4 = speed. */
 
     public static void main(String[] args) throws IOException {
         Random rand = new Random();
@@ -49,91 +56,88 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         boolean str_Enemy = false;
         String Cname = null;
 
-    launch(args);
-
+        launch(args);
 
 
         System.out.println("Welcome to this game");
-            while(true) {
-                try {
-                    System.out.println("\nWould you like to:\nLoad old Character or Create new one?\n\n 1.Create new Player\t\t2. Load old Player's file");
-                    decision = scan.nextInt();
-                    if (decision == 1) {
-                        status = true;
-                    }
-                    if (decision == 1 || decision == 2) {
-                        scan.nextLine();
-                        break;
-                    } else {
-                        System.out.println("Invalid entry");
-                        scan.nextLine();
-                    }
+        while (true) {
+            try {
+                System.out.println("\nWould you like to:\nLoad old Character or Create new one?\n\n 1.Create new Player\t\t2. Load old Player's file");
+                decision = scan.nextInt();
+                if (decision == 1) {
+                    status = true;
                 }
-
-            catch(Exception e){
-                    System.out.println("Invalid Entry!");
+                if (decision == 1 || decision == 2) {
+                    scan.nextLine();
+                    break;
+                } else {
+                    System.out.println("Invalid entry");
                     scan.nextLine();
                 }
+            } catch (Exception e) {
+                System.out.println("Invalid Entry!");
+                scan.nextLine();
             }
+        }
 
-            switch (decision) {
-                //Creating new Player
-                case 1:
-                    System.out.println("Please enter your character's name");
-                    name = scan.nextLine();
-                    // creating of character
-                    while (true) {
-                        try {
-                            //enters stat
-                            System.out.println("Enter the stats you would like for your characters\n you are allowed 15 points");
-                            System.out.print("First add your stats for Attack: ");
-                            PlayersAttack = scan.nextInt();
-                            System.out.print("\nEnter Stats for Defense: ");
-                            PlayersDefense = scan.nextInt();
-                            System.out.print("\nEnter Stats for Speed: ");
-                            PlayersSpeed = scan.nextInt();
+        switch (decision) {
+            //Creating new Player
+            case 1:
+                System.out.println("Please enter your character's name");
+                name = scan.nextLine();
+                // creating of character
+                while (true) {
+                    try {
+                        //enters stat
+                        System.out.println("Enter the stats you would like for your characters\n you are allowed 15 points");
+                        System.out.print("First add your stats for Attack: ");
+                        PlayersAttack = scan.nextInt();
+                        System.out.print("\nEnter Stats for Defense: ");
+                        PlayersDefense = scan.nextInt();
+                        System.out.print("\nEnter Stats for Speed: ");
+                        PlayersSpeed = scan.nextInt();
 
-                            if ((PlayersAttack + PlayersDefense + PlayersSpeed) == 15) {
-                                break;
-                            } else {
-                                System.out.println("INVALID amount! Try again.");
-                            }
-                        } catch (Exception e) {
-                            System.out.println("Invalid entry! Try again.");
-                            PlayersAttack = 0;
-                            PlayersDefense = 0;
-                            PlayersSpeed = 0;
-                            scan.nextLine();
+                        if ((PlayersAttack + PlayersDefense + PlayersSpeed) == 15) {
+                            break;
+                        } else {
+                            System.out.println("INVALID amount! Try again.");
                         }
+                    } catch (Exception e) {
+                        System.out.println("Invalid entry! Try again.");
+                        PlayersAttack = 0;
+                        PlayersDefense = 0;
+                        PlayersSpeed = 0;
+                        scan.nextLine();
                     }
-                    point.create(name, PlayersAttack, PlayersDefense, PlayersSpeed);
-                    System.out.println("\nCongratulations! You have successfully created your character:  " + name);
-                    break;
-                // load old Player
-                case 2:
-                    System.out.println("enter character's name: ");
-                    Cname = scan.next();
-                    Cname = Cname + ".ser";
-                    point.loadGame(Cname);
-                    break;
-            }
+                }
+                point.create(name, PlayersAttack, PlayersDefense, PlayersSpeed);
+                System.out.println("\nCongratulations! You have successfully created your character:  " + name);
+                break;
+            // load old Player
+            case 2:
+                System.out.println("enter character's name: ");
+                Cname = scan.next();
+                Cname = Cname + ".ser";
+                point.loadGame(Cname);
+                break;
+        }
 
         point.createMon();//creates monster list
 
         // battle of monster
         while (true) {
-                // to make monster Stronger
-                point.Stronger(str_Enemy);
+            // to make monster Stronger
+            point.Stronger(str_Enemy);
 
-                System.out.println("Select the monster you would like to fight:");
-                point.monsterList();
-                Monsterindex = scan.nextInt();
+            System.out.println("Select the monster you would like to fight:");
+            point.monsterList();
+            Monsterindex = scan.nextInt();
 
-                //to save the game
-                if (Monsterindex == 8) {
-                    point.saveGame(status);
-                    System.exit(1);
-                }
+            //to save the game
+            if (Monsterindex == 8) {
+                point.saveGame(status);
+                System.exit(1);
+            }
 
             MonsterName = point.list((Monsterindex - 1));
             Monsterindex = Monsterindex - 1;
@@ -142,7 +146,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             // chance to of infected monster
             flood_Chance = rand.nextInt(5);
 
-            switch(flood_Chance){
+            switch (flood_Chance) {
                 case 3:
                     point.turned_Flood(Monsterindex);
                     Monsterindex = 7;
@@ -156,9 +160,9 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             System.out.println("FIGHT!\n");
             while (true) {
 
-                while(true) {
+                while (true) {
 
-                    System.out.println(name + "\t" + "Current HP: " + point.currentHealth(1)+"\n" );
+                    System.out.println(name + "\t" + "Current HP: " + point.currentHealth(1) + "\n");
                     System.out.println(MonsterName + "\thealth: " + point.enemyhp(Monsterindex));
 
                     //menu to tell user his/her options
@@ -206,11 +210,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
                             break;
                     }
                     // to break out of the loop to continue the battle sequence
-                    if( decision != 5){
+                    if (decision != 5) {
                         break;
                     }
 
-                    }
+                }
                 // check if monster is defeated
                 if (point.enemyHP(Monsterindex)) {
                     System.out.println("You have Defeated " + point.getMonsters(Monsterindex));
@@ -233,7 +237,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
                     case 5:
                         dam = point.MonAttack(Monsterindex, 1);
                         System.out.println(point.list(Monsterindex) + " did " + dam + " to you\n");
-                        point.setPlayerAttack(1,dam);
+                        point.setPlayerAttack(1, dam);
                         break;
                     // grenade attack
                     case 6:
@@ -260,10 +264,9 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         }
     }
 
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         primWindow = primaryStage;
-
 
 
         // Scene for openning Scene
@@ -271,7 +274,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         HBox buttonBox = new HBox();
         loadChar = new Button("Load Character");
         newChar = new Button("Create new Character");
-        buttonBox.setPadding(new Insets(10,10,10,10));
+        buttonBox.setPadding(new Insets(10, 10, 10, 10));
         buttonBox.setSpacing(15);
 
 
@@ -290,13 +293,13 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
         // image for home screen
         Image imageHalo = new Image("halo-5-image1.jpg");
-        BackgroundImage openIMG = new BackgroundImage(imageHalo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,  new BackgroundSize(900, 500, false, false , true , true));
+        BackgroundImage openIMG = new BackgroundImage(imageHalo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(900, 500, false, false, true, true));
 
         border.setBackground(new Background(openIMG));
 
         border.setBottom(buttonBox);
         border.bottomProperty();
-        Scene Opening = new Scene(border, 900 , 500);// opening screen of program to create or load old charater
+        Scene Opening = new Scene(border, 900, 500);// opening screen of program to create or load old charater
         primWindow.setScene(Opening);
         primWindow.show();
     }
@@ -305,7 +308,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
     public void handle(ActionEvent event) {
 
         //TO load the Character
-        if(event.getSource() == loadChar){
+        if (event.getSource() == loadChar) {
             Stage secWindow = new Stage();
 
             GridPane loadPane = new GridPane();
@@ -313,21 +316,21 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             //text field to enter character's name
             TextField charName = new TextField();
             charName.setPromptText("USERNAME");
-            charName.setMaxSize(350,250);
+            charName.setMaxSize(350, 250);
             GridPane.setConstraints(charName, 0, 0);
 
             //button to load character
             Button okay = new Button("Load Character");
-            GridPane.setConstraints(okay, 0,1);
+            GridPane.setConstraints(okay, 0, 1);
 
             //Background Image
             Image openingIMG = new Image("loadChar_PIC.jpg");
-            BackgroundImage image = new BackgroundImage(openingIMG,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER, new BackgroundSize(300, 300, true, true , true, true));
+            BackgroundImage image = new BackgroundImage(openingIMG, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(300, 300, true, true, true, true));
             loadPane.setBackground(new Background(image));
 
 
-            loadPane.setPadding(new Insets(0,0,0,10));
-            loadPane.getChildren().addAll(okay,charName); // add nodes to gridpane
+            loadPane.setPadding(new Insets(0, 0, 0, 10));
+            loadPane.getChildren().addAll(okay, charName); // add nodes to gridpane
 
             Scene opening = new Scene(loadPane, 550, 300);
             secWindow.setResizable(false);
@@ -341,36 +344,33 @@ public class Main extends Application implements EventHandler<ActionEvent>{
                 name = name.concat(".ser");
 
 
-                    if(battle.testLoad(name)){
-                        battle.loadGame(name);
-                        secWindow.close();
-                        selectionScene();
-                    }
-                    else{
-                        charName.clear();
-                    }
+                if (battle.testLoad(name)) {
+                    battle.loadGame(name);
+                    secWindow.close();
+                    selectionScene();
+                } else {
+                    charName.clear();
+                }
 
 
                 //put scene for selecting who to battle/ status of character
 
             });
 
-            if(event.getSource() == newChar){
+            if (event.getSource() == newChar) {
 
             }
-
-
 
 
         }
     }
 
-    public void selectionScene(){
+    public void selectionScene() {
         BorderPane border = new BorderPane();
 
         //Players Status on left side of border Pane
         VBox playerInfo = new VBox();
-        playerInfo.setPadding(new Insets(10,10,10,10));
+        playerInfo.setPadding(new Insets(10, 10, 10, 10));
         Label level = new Label("Level: " + battle.getLevel());
         Label health = new Label("Health: " + battle.currentHealth(1) + "/" + battle.getMaxHealth());
         Label grendaes = new Label("Grenades: " + battle.getGrenades());
@@ -382,60 +382,76 @@ public class Main extends Application implements EventHandler<ActionEvent>{
         grendaes.setTextFill(Color.WHITE);
         healthPack.setTextFill(Color.WHITE);
 
+        playerInfo.setPrefWidth(200);
+
         // adding all nodes to players corner status
         playerInfo.getChildren().addAll(level, health, grendaes, healthPack);// add nodes to Vbox
         Image PlayerStat = new Image("status.jpg");
-        BackgroundImage image = new BackgroundImage(PlayerStat,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT, new BackgroundSize(20, 300, true, true , true, true));
+        BackgroundImage image = new BackgroundImage(PlayerStat, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(20, 300, true, true, true, true));
         playerInfo.setBackground(new Background(image));
         border.setLeft(playerInfo);
 
         //List of Monster to Fight
         battle.createMon();//creates monster list
         listNames = new ListView<>();//listview,
+        listNames.setMaxWidth(500);
+        listNames.setStyle("-fx-font-size: 1.5em");
 
         String copyNames; // local variable to add names to listView
-        for(int i = 0; i < battle.monster.length; i++){
+        for (int i = 0; i < battle.monster.length; i++) {
             copyNames = battle.monster[i].getSpecies();
             listNames.getItems().add(copyNames);
         }
 
         //selection mode for list view, one to fight one monster
+
         listNames.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+
+
         border.setCenter(listNames);
 
         //Status of Monster
         VBox monStat = new VBox();
+        monStat.setMaxWidth(200);
 
-        Label monName = new Label("");
+        Label monName = new Label("default");
         Label monHealth = new Label("");
         Label monATK = new Label("");
         Label monDEF = new Label("");
+        Label monSpeed = new Label("");
 
-        monStat.getChildren().addAll(monName, monHealth, monATK, monDEF);
+        monStat.setPadding(new Insets(10,10,10,10));
+
+
+        monStat.getChildren().addAll(monName, monHealth, monATK, monDEF, monSpeed);
         border.setRight(monStat);
 
+        ObservableList<String> name = listNames.getSelectionModel().getSelectedItems();
 
+        listNames.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
-        listNames.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                monLabel = battle.getMonInfo(newValue, monLabel);
 
-            public void handle(MouseEvent event) {
+                monName.setText("Name: " + monLabel[0]);
+                monHealth.setText("HP: " + monLabel[1]);
+                monATK.setText("Attack: " + monLabel[2]);
+                monDEF.setText("Defense: " + monLabel[3]);
+                monSpeed.setText("Speed: " + monLabel[4]);
 
-                Monster selectedMon = new Monster();
-
-                ObservableList<String> name = listNames.getSelectionModel().getSelectedItems();
-
-
-                    String stringName = name.toString();
-                    selectedMon = battle.findMonster(stringName);
-                    monName.setText(selectedMon.getSpecies());
-                    System.out.print(selectedMon.getSpecies());
             }
         });
 
 
 
-        Scene SelectionScene = new Scene(border, 500, 500);
+
+
+        Scene SelectionScene = new Scene(border, 900, 500);
         primWindow.setScene(SelectionScene);
+
     }
 }
+
 
