@@ -118,10 +118,12 @@ public class Battle extends Characters {
         return false;
     }
 
+    //creates the new character
     public void create(String name, int atk, int def, int spd) {
         Player1[1] = new Player(name, atk, def, spd);
     }
 
+    // prints out monsters to fight in terminal version
     public void monsterList() {
         for (int i = 0; i < 7; i++) {
             System.out.println((i + 1) + ". " + monster[i].getSpecies());
@@ -129,7 +131,7 @@ public class Battle extends Characters {
         System.out.println("8. Save game");
     }
 
-
+    // method to create all monster or where to add to give stats for monsters
     public void createMon() {
         monster[0] = new Monster("Grunt", 4, 4, 4, 75, 35);
         monster[1] = new Monster("Jackel", 13, 10, 11, 135, 45);
@@ -140,6 +142,18 @@ public class Battle extends Characters {
         monster[6] = new Monster("Arbitor", 67 , 47, 39, 600, 185);
     }
 
+    public int findMonster(String nameToFind){
+
+        for( int i = 0; i < monster.length; i++){
+            if(nameToFind == monster[i].getSpecies()){
+                return i;
+            }
+        }
+
+    return -1;
+    }
+
+    //used to get info on monsters to be used to print on labels in main.java, couldnt used clone in object class due to protected and wont transfer over
     public String[] getMonInfo(String name, String[] labels) {
 
         for (int i = 0; i < monster.length; i++) {
@@ -171,12 +185,14 @@ public class Battle extends Characters {
         }
     }
 
+
     public String list(int decision) {
         String MonName;
         MonName = monster[decision].getSpecies();
         return MonName;
     }
 
+    //reset the health of defeated monster
     public void resetHP(int index) {
         monster[index].reset_Health(monster[index].getMaxHealth());
     }
@@ -258,7 +274,7 @@ public class Battle extends Characters {
         }
         return status;
     }
-
+// print player's status in terminal version
     public void print_status(int index){
         System.out.println("Level: " + Player1[index].getLevel() + "\tEXP: " + Player1[index].getExp()+"/" + Player1[index].getMaxExp());
         System.out.println("Attack: " + Player1[index].getAttack() + "\tDefense: " + Player1[index].getDefense() + "\tSpeed: " + Player1[index].getSpeed());
