@@ -32,6 +32,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button loadChar;
     Button newChar;
     Stage primWindow;
+    static boolean status = false;// if monster gets stronger
 
     ListView<String> listNames;
     String monLabel[] = new String[5];/* reference to getting value of monster to print on labels
@@ -52,7 +53,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         int Mdecision;
         int dam;
         int flood_Chance;
-        boolean status = false;
+
         boolean str_Enemy = false;
         String Cname = null;
 
@@ -368,6 +369,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public void selectionScene() {
         BorderPane border = new BorderPane();
 
+        Button saveButton = new Button("SAVE");
+        Button battleButton = new Button("FIGHT!!!");
+
         //Players Status on left side of border Pane
         VBox playerInfo = new VBox();
         playerInfo.setPadding(new Insets(10, 10, 10, 10));
@@ -415,6 +419,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         VBox monStat = new VBox();
         monStat.setMaxWidth(200);
 
+        // all the labels for monster
         Label monName = new Label("default");
         Label monHealth = new Label("");
         Label monATK = new Label("");
@@ -426,6 +431,38 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         monStat.getChildren().addAll(monName, monHealth, monATK, monDEF, monSpeed);
         border.setRight(monStat);
+
+        //buttons on bottom to interact with game/list scene
+        HBox buttonBox = new HBox();
+        buttonBox.getChildren().addAll(saveButton, battleButton);
+        saveButton.setPrefSize(300, 50);
+        battleButton.setPrefSize(300, 50);
+
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setSpacing(10);
+        border.setBottom(buttonBox);
+
+        saveButton.setOnAction(e -> {
+
+            Alert saveDialog = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to save?", ButtonType.YES, ButtonType.CANCEL);
+            saveDialog.showAndWait();
+
+            if(saveDialog.getResult() == ButtonType.YES){
+                battle.saveGame(status);
+                Alert saveInfo = new Alert(Alert.AlertType.INFORMATION, "Current Status: \n" + battle.printStatus(), ButtonType.OK);
+                saveInfo.showAndWait();
+                if(saveInfo.getResult() == ButtonType.OK){
+                    saveInfo.close();
+                    primWindow.close();
+                }
+
+            }
+            else if(saveDialog.getResult() == ButtonType.CANCEL){
+                saveDialog.close();
+            }
+
+        });
+
 
         ObservableList<String> name = listNames.getSelectionModel().getSelectedItems();
 

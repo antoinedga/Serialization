@@ -216,6 +216,11 @@ public class Battle extends Characters {
         System.out.println("Character: " + Player1[1].getSpecies() +"\nLevel: " + Player1[1].getLevel() +"\nHealth: " + Player1[1].getHealth() + "\n Attack: " + Player1[1].getAttack() + "\nDefense: " + Player1[1].getDefense() +
         "\nSpeed: " + Player1[1].getSpeed() + "\nHealthPack: " + Player1[1].getHealthPack() + "\nGrenades: " + Player1[1].getGrenade() + "\nEXP: " + Player1[1].getExp());
     }
+    public String printStatus(){
+       String statusForSave = "Character: " + Player1[1].getSpecies() +"\nLevel: " + Player1[1].getLevel() +"\nHealth: " + Player1[1].getHealth() + "\n Attack: " + Player1[1].getAttack() + "\nDefense: " + Player1[1].getDefense() +
+                "\nSpeed: " + Player1[1].getSpeed() + "\nHealthPack: " + Player1[1].getHealthPack() + "\nGrenades: " + Player1[1].getGrenade() + "\nEXP: " + Player1[1].getExp();
+        return statusForSave;
+    }
 
     // to test to input and catch error
     public boolean testLoad(String file){
