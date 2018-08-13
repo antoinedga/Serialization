@@ -1,3 +1,1 @@
-This is a java program where I go and practice ideas to try out such as, Serialization, GUI with JAVAFX, and practicing with methods and objects. Currently creating a simple
-pokemon like battle with halo character references. This is a program not to make money but to prove my skills and understand on working with librarys that wasnt taught in my programminng 1 class
-at UF and that I am more than capable to handle a huge programs with more than 1000+ lines of code/ other classes.
+This is a java program where I go and practice ideas to try out such as, Serialization, GUI with JAVAFX, and practicing with methods and objects. Currently creating a simple pokemon like battle with halo character references. This is a program not to make money but more on demostrating my capabilities to learn new code in java that I wasnt taught while in my programming fundamental course at UF as well as to challenging myself in trying new codes.
