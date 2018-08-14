@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -33,7 +34,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button newChar;
     Stage primWindow;
     static boolean status = false;// if monster gets stronger
-
+    static int monsterIndexUI = 0;
     ListView<String> listNames;
     String monLabel[] = new String[5];/* reference to getting value of monster to print on labels
     each index representing a data of the monster selected, 0 = name, 1 = health, 2 = attack, 3 = defense, 4 = speed. */
@@ -442,29 +443,33 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         buttonBox.setSpacing(10);
         border.setBottom(buttonBox);
 
+        // to save the character
         saveButton.setOnAction(e -> {
-
+            // to confirm if user wants to save console
             Alert saveDialog = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to save?", ButtonType.YES, ButtonType.CANCEL);
             saveDialog.showAndWait();
 
             if(saveDialog.getResult() == ButtonType.YES){
                 battle.saveGame(status);
                 Alert saveInfo = new Alert(Alert.AlertType.INFORMATION, "Current Status: \n" + battle.printStatus(), ButtonType.OK);
+                saveInfo.setHeaderText("Save Successful!");
                 saveInfo.showAndWait();
+
+                //okay to confirm save and close application
                 if(saveInfo.getResult() == ButtonType.OK){
                     saveInfo.close();
                     primWindow.close();
+                    System.exit(1);
                 }
 
             }
+            //goes back to selection screen
             else if(saveDialog.getResult() == ButtonType.CANCEL){
                 saveDialog.close();
             }
 
         });
 
-
-        ObservableList<String> name = listNames.getSelectionModel().getSelectedItems();
 
         listNames.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -481,7 +486,12 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         });
 
-
+        //finds monster's index to fight. sends control to fightButton method
+        battleButton.setOnAction(e -> {
+            String findMonsterName = listNames.getSelectionModel().getSelectedItem(); //gets selected on list, using string, reference to get monster ID
+            monsterIndexUI = battle.findMonster(findMonsterName);
+            fightButton();
+        });
 
 
 
@@ -489,6 +499,12 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         primWindow.setScene(SelectionScene);
 
     }
+
+    public void fightButton(){
+        
+    }
+
+
 }
 
 
