@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.control.Spinner;
 
 import java.io.*;
 import java.util.*;
@@ -308,16 +309,19 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        Stage secWindow = new Stage();
+        secWindow.setResizable(false);
+
 
         //TO load the Character
         if (event.getSource() == loadChar) {
-            Stage secWindow = new Stage();
 
             GridPane loadPane = new GridPane();
 
             //text field to enter character's name
             TextField charName = new TextField();
             charName.setPromptText("USERNAME");
+            //charName.setFocusTraversable(false);
             charName.setMaxSize(350, 250);
             GridPane.setConstraints(charName, 0, 0);
 
@@ -335,9 +339,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             loadPane.getChildren().addAll(okay, charName); // add nodes to gridpane
 
             Scene opening = new Scene(loadPane, 550, 300);
-            secWindow.setResizable(false);
-            secWindow.setScene(opening);
 
+            secWindow.setScene(opening);
             secWindow.show();
 
             // load character by calling loading method
@@ -358,14 +361,86 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 //put scene for selecting who to battle/ status of character
 
             });
+        }
 
             if (event.getSource() == newChar) {
+
+
+                //set spinner for stats and editable to false to make it that no one can add number by typing
+                Spinner<Integer> attackSpinner = new Spinner<>(1,13,1,1);
+                Spinner<Integer> defenseSpinner = new Spinner<>(1,13,1,1);
+                Spinner<Integer> speedSpinner = new Spinner<>(1,13,1,1);
+
+//                attackSpinner.setStyle("STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL");
+//                defenseSpinner.setStyle("STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL");
+//                speedSpinner.setStyle("STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL");
+
+                attackSpinner.setEditable(false);
+                defenseSpinner.setEditable(false);
+                speedSpinner.setEditable(false);
+
+                // buttons to go to for Hboxbuttons
+                Button goBackmenu = new Button("Go BACK to menu");
+                Button createChar = new Button("Create");
+                Button undoStat = new Button("UNDO");
+
+                // for username and textfield to add
+                Label userName = new Label("USERNAME");
+                TextField userText = new TextField();
+                userText.setPromptText("I.E JOHN");
+                userText.setMaxSize(100,30);
+                userText.setFocusTraversable(false);// to keep prompt even with action event
+
+                // labels to be next to spinner to know which spinner is for what
+                Label attackSpinnerName = new Label("ATTACK: ");
+                Label defenseSpinnerName = new Label("DEFENSE: ");
+                Label speedSpinnerName = new Label("SPEED: ");
+
+                //to see what the diagram to look for all layouts, go to CreatingMenuScene.jpg in src
+                VBox vboxScene = new VBox();
+                HBox hBoxSeperator = new HBox();
+                VBox labelVbox = new VBox();
+                VBox inputVbox = new VBox();
+                HBox hboxButtons = new HBox();
+
+                labelVbox.setMaxWidth(450);
+
+                inputVbox.setMaxWidth(450);
+                inputVbox.setAlignment(Pos.CENTER_RIGHT);
+
+                vboxScene.getChildren().addAll(hBoxSeperator, hboxButtons);
+                hBoxSeperator.getChildren().addAll(labelVbox, inputVbox);
+
+                labelVbox.getChildren().addAll(userName,attackSpinnerName,defenseSpinnerName,speedSpinnerName); // adding all label in labelVbox
+
+                inputVbox.getChildren().addAll(userText, attackSpinner, defenseSpinner, speedSpinner); // adding all input for creating character
+
+                hboxButtons.getChildren().addAll(goBackmenu,createChar,undoStat);// adding buttons to hboxButtons
+
+                Scene creatingScene = new Scene(vboxScene, 900, 500);
+
+                secWindow.setScene(creatingScene);
+                secWindow.show();
+
+
+                // all the buttons functions
+
+                //to clear text field and refresh
+                undoStat.setOnAction(e -> {
+                    userText.clear();
+
+                    while(attackSpinner.getValue() > 1 || defenseSpinner.getValue() > 1 || speedSpinner.getValue() > 1){
+                        attackSpinner.decrement();
+                        defenseSpinner.decrement();
+                        speedSpinner.decrement();
+                    }
+                });
 
             }
 
 
         }
-    }
+
 
     public void selectionScene() {
         BorderPane border = new BorderPane();
