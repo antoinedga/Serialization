@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -403,10 +404,17 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 VBox inputVbox = new VBox();
                 HBox hboxButtons = new HBox();
 
-                labelVbox.setMaxWidth(450);
+                labelVbox.setPrefWidth(450);
+                labelVbox.setSpacing(15);
+                labelVbox.setAlignment(Pos.CENTER);
 
-                inputVbox.setMaxWidth(450);
-                inputVbox.setAlignment(Pos.CENTER_RIGHT);
+                inputVbox.setPrefWidth(450);
+                inputVbox.setSpacing(10);
+                inputVbox.setAlignment(Pos.CENTER);
+
+                hboxButtons.setAlignment(Pos.BOTTOM_CENTER);
+                hboxButtons.setPadding(new Insets(10,10,10,10));
+                hboxButtons.setSpacing(10);
 
                 vboxScene.getChildren().addAll(hBoxSeperator, hboxButtons);
                 hBoxSeperator.getChildren().addAll(labelVbox, inputVbox);
@@ -434,6 +442,11 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                         defenseSpinner.decrement();
                         speedSpinner.decrement();
                     }
+                });
+
+                createChar.setOnAction(e -> {
+                    battle.create(userText.getText(),attackSpinner.getValue(), defenseSpinner.getValue(),speedSpinner.getValue());
+
                 });
 
             }
@@ -474,7 +487,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         //List of Monster to Fight
         battle.createMon();//creates monster list
         listNames = new ListView<>();//listview,
-        listNames.setMaxWidth(500);
+        listNames.setPrefSize(500, 300);
         listNames.setStyle("-fx-font-size: 1.5em");
 
         String copyNames; // local variable to add names to listView
@@ -493,10 +506,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         //Status of Monster
         VBox monStat = new VBox();
-        monStat.setMaxWidth(200);
+        monStat.setPrefWidth(250);
 
         // all the labels for monster
-        Label monName = new Label("default");
+        Label monName = new Label("");
         Label monHealth = new Label("");
         Label monATK = new Label("");
         Label monDEF = new Label("");
