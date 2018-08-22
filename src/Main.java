@@ -41,7 +41,20 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     String monLabel[] = new String[5];/* reference to getting value of monster to print on labels
     each index representing a data of the monster selected, 0 = name, 1 = health, 2 = attack, 3 = defense, 4 = speed. */
 
+    Scene Opening;
+
     public static void main(String[] args) throws IOException {
+
+        if (args[0].toLowerCase().equals("terminal")) {
+            terminal();
+        }
+        if (args[0].toLowerCase().equals("application")) {
+            launch(args);
+        }
+    }
+
+    public static void terminal(){
+
         Random rand = new Random();
         Scanner scan = new Scanner(System.in);
         String name = null;
@@ -59,9 +72,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         boolean str_Enemy = false;
         String Cname = null;
-
-        launch(args);
-
 
         System.out.println("Welcome to this game");
         while (true) {
@@ -268,10 +278,15 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
     }
 
+
     public void start(Stage primaryStage) throws Exception {
 
         primWindow = primaryStage;
 
+
+        //set for close button on window's X
+        //made it an auto save feature(ish) for closing the application, i made it that the method is the control and dont consume event, later will make it that you cant save by X if in a fight
+        primWindow.setOnCloseRequest(e -> closeMethod());
 
         // Scene for openning Scene
         BorderPane border = new BorderPane();
@@ -303,16 +318,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         border.setBottom(buttonBox);
         border.bottomProperty();
-        Scene Opening = new Scene(border, 900, 500);// opening screen of program to create or load old charater
+        Opening = new Scene(border, 900, 500);// opening screen of program to create or load old charater
         primWindow.setScene(Opening);
         primWindow.show();
     }
 
     @Override
     public void handle(ActionEvent event) {
-        Stage secWindow = new Stage();
-        secWindow.setResizable(false);
-
 
         //TO load the Character
         if (event.getSource() == loadChar) {
@@ -339,42 +351,33 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             loadPane.setPadding(new Insets(0, 0, 0, 10));
             loadPane.getChildren().addAll(okay, charName); // add nodes to gridpane
 
-            Scene opening = new Scene(loadPane, 550, 300);
+            Scene opening = new Scene(loadPane, 900, 500);
 
-            secWindow.setScene(opening);
-            secWindow.show();
+            primWindow.setScene(opening);
 
             // load character by calling loading method
             okay.setOnAction(e -> {
                 String name = charName.getText();
                 name = name.concat(".ser");
 
-
                 if (battle.testLoad(name)) {
                     battle.loadGame(name);
-                    secWindow.close();
                     selectionScene();
                 } else {
                     charName.clear();
                 }
 
-
-                //put scene for selecting who to battle/ status of character
-
             });
         }
 
-            if (event.getSource() == newChar) {
 
+            // scene for creating new character
+            if (event.getSource() == newChar) {
 
                 //set spinner for stats and editable to false to make it that no one can add number by typing
                 Spinner<Integer> attackSpinner = new Spinner<>(1,13,1,1);
                 Spinner<Integer> defenseSpinner = new Spinner<>(1,13,1,1);
                 Spinner<Integer> speedSpinner = new Spinner<>(1,13,1,1);
-
-//                attackSpinner.setStyle("STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL");
-//                defenseSpinner.setStyle("STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL");
-//                speedSpinner.setStyle("STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL");
 
                 attackSpinner.setEditable(false);
                 defenseSpinner.setEditable(false);
@@ -427,9 +430,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
                 Scene creatingScene = new Scene(vboxScene, 900, 500);
 
-                secWindow.setScene(creatingScene);
-                secWindow.show();
-
+                primWindow.setScene(creatingScene);
 
                 // all the buttons functions
 
@@ -444,17 +445,47 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     }
                 });
 
+
+                //button to create character
                 createChar.setOnAction(e -> {
-                    battle.create(userText.getText(),attackSpinner.getValue(), defenseSpinner.getValue(),speedSpinner.getValue());
+
+                    int statsPoints = attackSpinner.getValue() + defenseSpinner.getValue() + speedSpinner.getValue();
+                    if (statsPoints != 15){
+
+                        Alert invalidStatWindow = new Alert(Alert.AlertType.ERROR,"Stats for Character must equal to 15!",ButtonType.OK);
+                        invalidStatWindow.showAndWait();
+
+                        if(invalidStatWindow.getResult() == ButtonType.OK){
+                                invalidStatWindow.close();
+                            while(attackSpinner.getValue() > 1 || defenseSpinner.getValue() > 1 || speedSpinner.getValue() > 1){
+                                attackSpinner.decrement();
+                                defenseSpinner.decrement();
+                                speedSpinner.decrement();
+                            }
+                        }
+                    }
+
+                    // to actually create character if status is 15
+                    else{
+                        battle.create(userText.getText(),attackSpinner.getValue(), defenseSpinner.getValue(),speedSpinner.getValue());
+
+                        Alert createdCharInfo = new Alert(Alert.AlertType.INFORMATION,"Congratulation! You created " + userText.getText() + "!", ButtonType.OK);
+                        createdCharInfo.showAndWait();
+                        createdCharInfo.close();// must close to change scene
+                        selectionScene();
+                    }
 
                 });
 
+                goBackmenu.setOnAction(e ->{
+                    primWindow.setScene(Opening);
+                });
             }
-
 
         }
 
 
+        //selection scene to view which monster to fight with stats of mosnter on the side of the screen
     public void selectionScene() {
         BorderPane border = new BorderPane();
 
@@ -464,6 +495,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         //Players Status on left side of border Pane
         VBox playerInfo = new VBox();
         playerInfo.setPadding(new Insets(10, 10, 10, 10));
+        Label nameLabel = new Label("Name: " + battle.Player1[1].getSpecies()); //name to add in selection scene
         Label level = new Label("Level: " + battle.getLevel());
         Label health = new Label("Health: " + battle.currentHealth(1) + "/" + battle.getMaxHealth());
         Label grendaes = new Label("Grenades: " + battle.getGrenades());
@@ -478,7 +510,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         playerInfo.setPrefWidth(200);
 
         // adding all nodes to players corner status
-        playerInfo.getChildren().addAll(level, health, grendaes, healthPack);// add nodes to Vbox
+        playerInfo.getChildren().addAll(nameLabel, level, health, grendaes, healthPack);// add nodes to Vbox
         Image PlayerStat = new Image("status.jpg");
         BackgroundImage image = new BackgroundImage(PlayerStat, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(20, 300, true, true, true, true));
         playerInfo.setBackground(new Background(image));
@@ -497,10 +529,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
 
         //selection mode for list view, one to fight one monster
-
         listNames.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-
 
         border.setCenter(listNames);
 
@@ -581,15 +610,26 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             fightButton();
         });
 
-
-
         Scene SelectionScene = new Scene(border, 900, 500);
         primWindow.setScene(SelectionScene);
 
     }
 
     public void fightButton(){
-        
+    }
+
+    public void closeMethod(){
+
+        if(battle.Player1[1] == null){
+            System.out.println("closing game without character being load or created");
+            primWindow.close();
+        }
+        if(battle.Player1[1] != null){
+            battle.saveGame(status);
+            System.out.println("game saved with character loaded/created");
+            primWindow.close();
+        }
+
     }
 
 

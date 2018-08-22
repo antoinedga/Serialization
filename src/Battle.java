@@ -23,7 +23,7 @@ import javafx.stage.Window;
 
 public class Battle extends Characters {
 
-    public Player[] Player1 = new Player[4];
+    public Player[] Player1 = new Player[4]; //1 is where player is stored
     public Monster[] monster = new Monster[7];
 
 
